@@ -1,4 +1,4 @@
-import { AuthActions, successActionOf, failureActionOf } from "../actions";
+import { AuthActions, successActionOf, failureActionOf } from "../Actions";
 var initialState = {
     user: null,
     loader: false,

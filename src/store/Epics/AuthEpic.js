@@ -1,5 +1,5 @@
 import { of } from "rxjs";
-import { AuthActions, failureActionOf, successActionOf } from "../actions";
+import { AuthActions, failureActionOf, successActionOf } from "../Actions";
 import { HttpService } from "../../Services";
 import { serverUrl } from "../../Config";
 import { switchMap, map, catchError } from 'rxjs/operators';
@@ -10,11 +10,9 @@ export default class Epic {
         return action$.pipe(
             ofType(AuthActions.LOGIN),
             switchMap(({ payload }) => {
-                console.log("Auth Login Epic", payload)
                 return HttpService.post(`${serverUrl}/auth/login`, payload)
                     .pipe(
                         map(({ response }) => {
-                            console.log("response",response)
                             if (response && response.success) {
                                 return {
                                     type: successActionOf(AuthActions.LOGIN),
@@ -29,7 +27,6 @@ export default class Epic {
                             }
                         }),
                         catchError(a => {
-                            console.log("error",a.message)
                             return of({
                                 type: failureActionOf(AuthActions.LOGIN),
                                 payload: a.message

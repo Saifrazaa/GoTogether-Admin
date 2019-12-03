@@ -1,6 +1,6 @@
 import React from "react";
 import { LoginComponent } from "../../Component";
-import { AuthActions } from "../../Store/actions";
+import { AuthActions } from "../../Store/Actions";
 import { connect } from "../../Store";
 class Login extends React.Component {
     _loginHandle(event, email, password) {

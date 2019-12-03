@@ -6,7 +6,8 @@ import {
 import {
     Home,
     Login,
-    NavBar
+    NavBar,
+    UserRequests
 } from "../Container";
 const AppRouter = () => (
     <Router>
@@ -14,6 +15,7 @@ const AppRouter = () => (
             <Route path="/" exact component={Login} />
             <NavBar />
             <Route path="/home" component={Home} />
+            <Route path="/user-requests" component={UserRequests} />
         </div>
     </Router>
 );

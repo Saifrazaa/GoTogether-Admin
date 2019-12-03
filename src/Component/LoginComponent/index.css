@@ -1,0 +1,18 @@
+.centerDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+}
+/* .MuiOutlinedInput-notchedOutline{
+  border-color: white !important;
+} */
+/* #outlined-basic{
+  width:1000;
+}
+.MuiInputBase-root{
+  color:#fff !important
+}
+.MuiFormLabel-root{
+  color: #fff !important;
+} */

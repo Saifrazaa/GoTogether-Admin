@@ -1,8 +1,23 @@
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { connect } from "react-redux";
+import { createEpicMiddleware, combineEpics } from "redux-observable";
 
-import { createStore, combineReducers,applyMiddleware } from "redux";
-import thunk from 'redux-thunk';
-import { AppReducer } from "./reducers";
+import { AppReducer, AuthReducer } from "./reducers";
+import { AuthEpic } from "./Epics"
+
+//Combine All Reducers
 var rootReducer = combineReducers({
+  AuthReducer,
   AppReducer
 });
-export const store = createStore(rootReducer,applyMiddleware(thunk));
+
+//Combine All Epics
+export const rootEpic = combineEpics(
+  AuthEpic.Login
+);
+
+export { connect };
+const epicMiddleware = createEpicMiddleware();
+export const store = createStore(rootReducer, applyMiddleware(epicMiddleware));
+epicMiddleware.run(rootEpic);
+

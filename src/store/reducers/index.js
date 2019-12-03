@@ -1,2 +1,6 @@
-import AppReducer from "./appReducer";
-export { AppReducer };
+import AppReducer from "./AppReducer";
+import AuthReducer from "./AuthReducer";
+export {
+    AppReducer,
+    AuthReducer
+};

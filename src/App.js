@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { store } from "./store";
+import { store } from "./Store";
 import { Provider } from "react-redux";
-import Home from "./Component/home";
+import Routing from "./Routing";
 
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Home />
+        <Routing />
       </Provider>
     );
   }

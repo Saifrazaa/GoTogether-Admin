@@ -42,6 +42,9 @@ class LoginComponent extends React.Component {
                         <div style={{ textAlign: "center" }}>
                             <img src={TitleLogo} alt="Title" style={{ height: screenHeight / 10, width: screenWidth / 7 }} />
                         </div>
+                        {this.props.error && <div style={{ marginTop: 20, textAlign: "center" }}>
+                            <h5>{this.props.error}</h5>
+                        </div>}
                         <div style={{ marginTop: 20 }}>
                             <TextField
                                 required

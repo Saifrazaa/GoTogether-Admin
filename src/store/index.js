@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { connect } from "react-redux";
 import { createEpicMiddleware, combineEpics } from "redux-observable";
 
-import { AppReducer, AuthReducer } from "./reducers";
+import { AppReducer, AuthReducer } from "./Reducers";
 import { AuthEpic } from "./Epics"
 
 //Combine All Reducers

@@ -2,8 +2,6 @@ import React from "react";
 import { LoginComponent } from "../../Component";
 import { AuthActions } from "../../Store/actions";
 import { connect } from "../../Store";
-import {useHistory} from "react-router-dom";
-let history;
 class Login extends React.Component {
     _loginHandle(event, email, password) {
         var payload = {
@@ -12,13 +10,9 @@ class Login extends React.Component {
         }
         this.props.login(payload);
     }
-    hooks=()=>{
-        history = useHistory();
-        return history
-    }
     componentWillReceiveProps(nextProps){
         if(nextProps && nextProps.success){
-            this.hooks();
+            nextProps.history.push("/home")
         }
     }
     render() {

@@ -37,4 +37,35 @@ export default class Epic {
             })
         );
     };
+    static HanldeUserRequest = action$ => {
+        return action$.pipe(
+            ofType(DataActions.HANDLE_USER_REQUEST),
+            switchMap(({ payload }) => {
+                return HttpService.post(`${serverUrl}/data/handleUserRequest`, payload)
+                    .pipe(
+                        map(({ response }) => {
+                            if (response && response.success) {
+                                return {
+                                    type: successActionOf(DataActions.HANDLE_USER_REQUEST),
+                                    payload: payload.userID
+                                };
+                            }
+                            else {
+                                return {
+                                    type: failureActionOf(DataActions.HANDLE_USER_REQUEST),
+                                    payload: response.error
+                                }
+                            }
+                        }),
+                        catchError(a => {
+                            return of({
+                                type: failureActionOf(DataActions.GET_USERS_FOR_APPROVAL),
+                                payload: a.message
+                            });
+                        })
+                    )
+
+            })
+        );
+    };
 }

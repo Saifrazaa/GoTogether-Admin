@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Button } from '@material-ui/core';
 
-import Background from "../../Assets/images/background.jpg";
+import Background from "../../Assets/images/back.jpg";
 import TitleLogo from "../../Assets/images/title.png";
 import Loader from "../Loader";
 import "./index.css";
@@ -37,7 +37,7 @@ class LoginComponent extends React.Component {
     render() {
         return (
             <div className="centerDiv" style={{ backgroundImage: `url(${Background})`, height: screenHeight, width: screenWidth }}>
-                <div className="centerDiv" style={{ backgroundColor: "rgba(255,255,255,0.8)", height: screenHeight / 2, width: screenWidth / 2 }}>
+                <div className="centerDiv" style={{ backgroundColor: "rgba(255,255,255,0.8)", height: screenHeight / 2, width: screenWidth / 2,borderRadius:10 }}>
                     <div>
                         <div style={{ textAlign: "center" }}>
                             <img src={TitleLogo} alt="Title" style={{ height: screenHeight / 10, width: screenWidth / 7 }} />

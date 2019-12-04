@@ -9,7 +9,7 @@ const screenWidth = window.screen.availWidth;
 class NavBar extends React.Component {
     render() {
         return (
-            <AppBar position="static" style={{backgroundColor:"#030303"}}>
+            <AppBar position="static" style={{backgroundColor:"#030303",height:50}}>
                 <Toolbar>
                     <div style={{ display: "flex", width: screenWidth }}>
                         <div style={{ width: "80%" }}>

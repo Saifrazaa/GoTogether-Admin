@@ -17,13 +17,16 @@ class UserRequests extends React.Component {
             this.setState({ users: nextProps.usersForApproval })
         }
     }
+    handleUserRequest(payload) {
+        this.props.handleUserRequest(payload);
+    }
     render() {
-        console.log("state compo",this.state.users)
         return (
             <UserRequestsComponent
                 usersForApproval={this.state.users}
                 error={this.props.error}
                 loader={this.props.loader}
+                handleUserRequest={this.handleUserRequest.bind(this)}
             />
         )
     }
@@ -37,7 +40,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        getUsersForApproval: () => dispatch(DataActions.getUsersForApproval())
+        getUsersForApproval: () => dispatch(DataActions.getUsersForApproval()),
+        handleUserRequest: (payload) => dispatch(DataActions.handleUserRequest(payload))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserRequests);

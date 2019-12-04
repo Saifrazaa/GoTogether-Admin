@@ -1,4 +1,6 @@
 import { DB } from "./db";
+import { transporter } from "./nodemailer";
 export {
-    DB
+    DB,
+    transporter
 }

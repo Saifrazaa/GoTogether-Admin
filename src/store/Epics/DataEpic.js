@@ -59,7 +59,69 @@ export default class Epic {
                         }),
                         catchError(a => {
                             return of({
-                                type: failureActionOf(DataActions.GET_USERS_FOR_APPROVAL),
+                                type: failureActionOf(DataActions.HANDLE_USER_REQUEST),
+                                payload: a.message
+                            });
+                        })
+                    )
+
+            })
+        );
+    };
+    static GetAllUsers = action$ => {
+        return action$.pipe(
+            ofType(DataActions.GET_ALL_USERS),
+            switchMap(() => {
+                return HttpService.get(`${serverUrl}/data/getAllUsers`)
+                    .pipe(
+                        map(({ response }) => {
+                            if (response && response.success) {
+                                return {
+                                    type: successActionOf(DataActions.GET_ALL_USERS),
+                                    payload: response.users
+                                };
+                            }
+                            else {
+                                return {
+                                    type: failureActionOf(DataActions.GET_ALL_USERS),
+                                    payload: response.error
+                                }
+                            }
+                        }),
+                        catchError(a => {
+                            return of({
+                                type: failureActionOf(DataActions.GET_ALL_USERS),
+                                payload: a.message
+                            });
+                        })
+                    )
+
+            })
+        );
+    };
+    static HandleUserListAction = action$ => {
+        return action$.pipe(
+            ofType(DataActions.HANDLE_USER_LIST_ACTION),
+            switchMap(({ payload }) => {
+                return HttpService.post(`${serverUrl}/data/handleUserListAction`, payload)
+                    .pipe(
+                        map(({ response }) => {
+                            if (response && response.success) {
+                                return {
+                                    type: successActionOf(DataActions.HANDLE_USER_LIST_ACTION),
+                                    payload: response.response || payload
+                                };
+                            }
+                            else {
+                                return {
+                                    type: failureActionOf(DataActions.HANDLE_USER_LIST_ACTION),
+                                    payload: response.error
+                                }
+                            }
+                        }),
+                        catchError(a => {
+                            return of({
+                                type: failureActionOf(DataActions.HANDLE_USER_LIST_ACTION),
                                 payload: a.message
                             });
                         })

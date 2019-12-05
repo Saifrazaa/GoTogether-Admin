@@ -26,7 +26,7 @@ router.post("/handleUserRequest", (req, res) => {
                 // text: 'That was easy!'
             };
             response.status = req.body.status === "approve" ? "approved" : "rejected";
-            response.profileApproved = true;
+            response.profileApproved = req.body.status === "approve" ? true : false;
             UsersModel.update({ _id: req.body.userID }, { $set: response }).then(response2 => {
                 if (response2) {
                     if (req.body.status === "approve") {
@@ -65,5 +65,51 @@ router.post("/handleUserRequest", (req, res) => {
         res.send({ success: false, error: err.message })
     })
 });
-
+router.get("/getAllUsers", (req, res) => {
+    UsersModel.find({}).then(response => {
+        if (response) {
+            res.send({ success: true, users: response })
+        }
+        else {
+            res.send({ success: false, error: "No User Found" })
+        }
+    }).catch(err => {
+        res.send({ success: false, error: err.message })
+    })
+})
+router.post("/handleUserListAction", (req, res) => {
+    var _id = req.body.userID;
+    var action = req.body.action;
+    UsersModel.findById({ _id }).then(response => {
+        if (response) {
+            if (action === "ban" || action === "permit") {
+                response.status = (action === "ban") ? "banned" : "approved";
+                UsersModel.update({ _id }, { $set: response }).then(response2 => {
+                    if (response2) {
+                        res.send({ success: true, response })
+                    }
+                    else {
+                        res.send({ success: false, error: "Something Bad Happened" })
+                    }
+                }).catch(err => {
+                    res.send({ success: false, error: err.message })
+                })
+            }
+            else {
+                UsersModel.deleteOne({ _id }).then(response3 => {
+                    if (response3) {
+                        res.send({ success: true })
+                    }
+                    else {
+                        res.send({ success: false, error: "Something Bad Happened" })
+                    }
+                }).catch(err => {
+                    res.send({ success: false, error: err.message })
+                })
+            }
+        }
+    }).catch(err => {
+        res.send({ success: false, error: err.message })
+    })
+})
 export default router;

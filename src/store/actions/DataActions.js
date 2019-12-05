@@ -1,6 +1,8 @@
 export default class DataActions {
     static GET_USERS_FOR_APPROVAL = "GET_USERS_FOR_APPROVAL";
     static HANDLE_USER_REQUEST = "HANDLE_USER_REQUEST";
+    static GET_ALL_USERS = "GET_ALL_USERS";
+    static HANDLE_USER_LIST_ACTION = "HANDLE_USER_LIST_ACTION";
 
     static getUsersForApproval(payload) {
         return {
@@ -8,9 +10,20 @@ export default class DataActions {
             payload
         }
     }
-    static handleUserRequest(payload){
+    static handleUserRequest(payload) {
         return {
-            type:this.HANDLE_USER_REQUEST,
+            type: this.HANDLE_USER_REQUEST,
+            payload
+        }
+    }
+    static getAllUsers() {
+        return {
+            type: this.GET_ALL_USERS
+        }
+    }
+    static handleUserListAction(payload) {
+        return {
+            type: this.HANDLE_USER_LIST_ACTION,
             payload
         }
     }

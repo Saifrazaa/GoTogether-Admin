@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const userschema = new mongoose.Schema({
     username: {
-
         type: String
     },
     email: {
@@ -60,10 +59,18 @@ const userschema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    status:{
-        type:String,
-        enum:["pending","approved","rejected","banned"]
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected", "banned"]
+    },
+    totalRides: {
+        type: Number,
+        default: 0
+    },
+    overallRating: {
+        type: Number,
+        default: 0
     }
 })
 
-module.exports = mongoose.model("gotogetherauths", userschema);
+module.exports = mongoose.model("users", userschema);

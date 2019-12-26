@@ -6,6 +6,9 @@ class UsersList extends React.Component {
     constructor(props) {
         super(props);
         props.getAllUsers();
+        if (!props.user) {
+            this.props.history.push("/")
+        }
     }
     handleUserAction(payload) {
         this.props.handleUserListAction(payload);
@@ -26,6 +29,7 @@ const mapStateToProps = (state) => {
         allUsers: state.DataReducer.allUsers,
         loader: state.DataReducer.loader,
         error: state.DataReducer.error,
+        user: state.AuthReducer.user
     }
 }
 const mapDispatchToProps = (dispatch) => {

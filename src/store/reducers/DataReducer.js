@@ -7,7 +7,8 @@ var initialState = {
     //Bevarages for components
     loader: false,
     error: undefined,
-    success: false
+    success: false,
+    onGoingRides: []
 };
 
 export default function DataReducer(state = initialState, action) {
@@ -55,6 +56,12 @@ export default function DataReducer(state = initialState, action) {
                 users.push(u[0]);
             }
             return { ...state, loader: false, allUsers: users }
+        case DataActions.GET_ALL_ONGOING_RIDES:
+            return { ...state, loader: true };
+        case successActionOf(DataActions.GET_ALL_ONGOING_RIDES):
+            return { ...state, loader: false, onGoingRides: action.payload }
+        case failureActionOf(DataActions.GET_ALL_ONGOING_RIDES):
+            return { ...state, loader: false, error: action.payload }
         default:
             return state;
     }

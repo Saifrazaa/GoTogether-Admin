@@ -1,11 +1,11 @@
 import express from "express";
-import { UsersModel } from "../models";
+import { UsersModel, OnGoingRides } from "../models";
 import { transporter } from "../config";
 
 var router = express();
 
 router.post("/getUsersForApproval", (req, res) => {
-    UsersModel.find({ profileApproved: false }).then(response => {
+    UsersModel.find({ profileCompleted: true, profileApproved: false }).then(response => {
         if (response && response !== null) {
             res.send({ success: true, response })
         }
@@ -110,6 +110,18 @@ router.post("/handleUserListAction", (req, res) => {
         }
     }).catch(err => {
         res.send({ success: false, error: err.message })
+    })
+})
+router.get("/allOnGoingRides", (req, res) => {
+    OnGoingRides.find({}).then(response => {
+        if (response) {
+            res.send({ success: true, onGoingRides: response })
+        }
+        else {
+            res.send({ success: false, error: "No Ride Found" })
+        }
+    }).catch((err) => {
+        res.send({ success: false, error: err.message });
     })
 })
 export default router;

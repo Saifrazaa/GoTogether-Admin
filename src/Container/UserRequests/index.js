@@ -11,6 +11,9 @@ class UserRequests extends React.Component {
             users: []
         }
         props.getUsersForApproval();
+        if (!props.user) {
+            this.props.history.push("/")
+        }
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps && nextProps.usersForApproval) {
@@ -35,7 +38,8 @@ const mapStateToProps = (state) => {
     return {
         usersForApproval: state.DataReducer.usersForApproval,
         loader: state.DataReducer.loader,
-        error: state.DataReducer.error
+        error: state.DataReducer.error,
+        user: state.AuthReducer.user
     }
 }
 const mapDispatchToProps = (dispatch) => {

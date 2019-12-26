@@ -130,4 +130,35 @@ export default class Epic {
             })
         );
     };
+    static GetAllOnGoingRides = action$ => {
+        return action$.pipe(
+            ofType(DataActions.GET_ALL_ONGOING_RIDES),
+            switchMap(() => {
+                return HttpService.get(`${serverUrl}/data/allOnGoingRides`)
+                    .pipe(
+                        map(({ response }) => {
+                            if (response && response.success) {
+                                return {
+                                    type: successActionOf(DataActions.GET_ALL_ONGOING_RIDES),
+                                    payload: response.onGoingRides
+                                };
+                            }
+                            else {
+                                return {
+                                    type: failureActionOf(DataActions.GET_ALL_ONGOING_RIDES),
+                                    payload: response.error
+                                }
+                            }
+                        }),
+                        catchError(a => {
+                            return of({
+                                type: failureActionOf(DataActions.GET_ALL_ONGOING_RIDES),
+                                payload: a.message
+                            });
+                        })
+                    )
+
+            })
+        );
+    };
 }

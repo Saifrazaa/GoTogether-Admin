@@ -21,7 +21,8 @@ export const rootEpic = combineEpics(
   DataEpic.GetUsersForApproval,
   DataEpic.HanldeUserRequest,
   DataEpic.GetAllUsers,
-  DataEpic.HandleUserListAction
+  DataEpic.HandleUserListAction,
+  DataEpic.GetAllOnGoingRides
 );
 
 export { connect };

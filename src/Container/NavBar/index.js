@@ -14,16 +14,16 @@ class NavBar extends React.Component {
     }
     render() {
         return (
-            <NavBarComponent
-                activeMenu={this.props.activeMenu}
-                onClickMenu={this._onClickMenu.bind(this)}
-            />
+            <div>
+                {this.props.user && <NavBarComponent activeMenu={this.props.activeMenu} onClickMenu={this._onClickMenu.bind(this)} onPressLogout={() => this.props.history.push("/")} />}
+            </div>
         )
     }
 }
 const mapStateToProps = (state) => {
     return {
-        activeMenu: state.AppReducer.activeMenu
+        activeMenu: state.AppReducer.activeMenu,
+        user: state.AuthReducer.user,
     }
 }
 const mapDispatchToProps = (dispatch) => {

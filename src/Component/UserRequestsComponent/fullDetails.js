@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Button, Dialog, DialogActions, DialogTitle, DialogContentText, DialogContent } from "@material-ui/core";
+import { Divider, Button } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import ConfirmDialog from "../Extras/ConfirmDialog";
 export default class FullDetails extends React.Component {
@@ -21,6 +21,7 @@ export default class FullDetails extends React.Component {
     }
     render() {
         var user = this.props.user;
+        console.log(user);
         return (
             <div className="centerDiv" style={{ height: "100%", width: "100%", position: "absolute", backgroundColor: "rgba(0,0,0,0.8)", textAlign: "center" }}>
                 {this.state.confirmDialog && <ConfirmDialog
@@ -65,22 +66,22 @@ export default class FullDetails extends React.Component {
                         <Divider />
                         <div style={{ margin: 10, textAlign: "center" }}>
                             <h5 style={{ fontFamily: "Century Gothic", fontWeight: "bold", padding: 20 }}>CNIC Front Picture</h5>
-                            <img src={"https://cdn.mangobaaz.com/wp-content/uploads/2017/11/chinese-man-cnic-cover.jpg"} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
+                            <img src={user.CNIC_front_picture} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
                         </div>
                         <Divider />
                         <div style={{ margin: 10, textAlign: "center" }}>
                             <h5 style={{ fontFamily: "Century Gothic", fontWeight: "bold", padding: 20 }}>CNIC Back Picture</h5>
-                            <img src={"https://cdn.mangobaaz.com/wp-content/uploads/2017/11/chinese-man-cnic-cover.jpg"} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
+                            <img src={user.CNIC_back_picture} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
                         </div>
                         <Divider />
                         <div style={{ margin: 10, textAlign: "center" }}>
                             <h5 style={{ fontFamily: "Century Gothic", fontWeight: "bold", padding: 20 }}>Driving License Front Picture</h5>
-                            <img src={"https://cdn.mangobaaz.com/wp-content/uploads/2017/11/chinese-man-cnic-cover.jpg"} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
+                            <img src={user.License_front_picture} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
                         </div>
                         <Divider />
                         <div style={{ margin: 10, textAlign: "center" }}>
                             <h5 style={{ fontFamily: "Century Gothic", fontWeight: "bold", padding: 20 }}>Driving License Back Picture</h5>
-                            <img src={"https://cdn.mangobaaz.com/wp-content/uploads/2017/11/chinese-man-cnic-cover.jpg"} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
+                            <img src={user.License_back_picture} alt="CNIC Front Side" style={{ height: "30%", width: "70%" }} />
                         </div>
                         <Divider />
                         <div style={{ textAlign: "center" }}>

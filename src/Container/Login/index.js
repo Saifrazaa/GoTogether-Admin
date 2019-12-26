@@ -12,7 +12,7 @@ class Login extends React.Component {
     }
     componentWillReceiveProps(nextProps){
         if(nextProps && nextProps.success){
-            nextProps.history.push("/home")
+            nextProps.history.push("/user-requests")
         }
     }
     render() {

@@ -1,5 +1,5 @@
 import express from "express";
-import { UsersModel, OnGoingRides } from "../models";
+import { UsersModel, OnGoingRides, CompletedRides } from "../models";
 import { transporter } from "../config";
 
 var router = express();
@@ -122,6 +122,36 @@ router.get("/allOnGoingRides", (req, res) => {
         }
     }).catch((err) => {
         res.send({ success: false, error: err.message });
+    })
+})
+router.get("/getAllComplains", (req, res) => {
+    CompletedRides.find({ "complains": { $exists: true }, $where: "this.complains.length>0" }).then(response => {
+        if (response && response.length > 0) {
+            var i = 0;
+            response.forEach((ride, index) => {
+                UsersModel.findById(ride.driverID).then(driver => {
+                    if (driver) {
+                        console.log(driver);
+                        i++;
+                        if (i === response.length) {
+                            res.send({ success: true, rides: response })
+                        }
+                    }
+                    else {
+                        i++;
+                        if (i === response.length) {
+                            res.send({ success: true, rides: response })
+                        }
+                    }
+                }).catch(err => {
+                })
+            })
+        }
+        else {
+            res.send({ success: false, error: "No Ride Found" })
+        }
+    }).catch(err => {
+        res.send({ success: false, error: err.message })
     })
 })
 export default router;

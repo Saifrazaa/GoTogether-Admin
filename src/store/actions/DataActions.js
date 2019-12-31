@@ -4,6 +4,7 @@ export default class DataActions {
     static GET_ALL_USERS = "GET_ALL_USERS";
     static HANDLE_USER_LIST_ACTION = "HANDLE_USER_LIST_ACTION";
     static GET_ALL_ONGOING_RIDES = "GET_ALL_ONGOING_RIDES";
+    static GET_ALL_COMPLAINS = "GET_ALL_COMPLAINS";
 
     static getUsersForApproval(payload) {
         return {
@@ -31,6 +32,11 @@ export default class DataActions {
     static getAllOnGoingJourneys() {
         return {
             type: this.GET_ALL_ONGOING_RIDES
+        }
+    }
+    static getAllComplains() {
+        return {
+            type: this.GET_ALL_COMPLAINS
         }
     }
 }

@@ -161,4 +161,35 @@ export default class Epic {
             })
         );
     };
+    static GetAllComplains = action$ => {
+        return action$.pipe(
+            ofType(DataActions.GET_ALL_COMPLAINS),
+            switchMap(() => {
+                return HttpService.get(`${serverUrl}/data/getAllComplains`)
+                    .pipe(
+                        map(({ response }) => {
+                            if (response && response.success) {
+                                return {
+                                    type: successActionOf(DataActions.GET_ALL_COMPLAINS),
+                                    payload: response.rides
+                                };
+                            }
+                            else {
+                                return {
+                                    type: failureActionOf(DataActions.GET_ALL_COMPLAINS),
+                                    payload: response.error
+                                }
+                            }
+                        }),
+                        catchError(a => {
+                            return of({
+                                type: failureActionOf(DataActions.GET_ALL_COMPLAINS),
+                                payload: a.message
+                            });
+                        })
+                    )
+
+            })
+        );
+    };
 }

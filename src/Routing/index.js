@@ -9,7 +9,8 @@ import {
     UserRequests,
     UsersList,
     Tracking,
-    CurrentRideLocation
+    CurrentRideLocation,
+    Complains
 } from "../Container";
 const AppRouter = () => (
     <Router>
@@ -20,6 +21,7 @@ const AppRouter = () => (
             <Route path="/users-list" component={UsersList} />
             <Route path="/tracking" component={Tracking} />
             <Route path="/current-ride-location" component={CurrentRideLocation} />
+            <Route path="/complains" component={Complains} />
         </div>
     </Router>
 );

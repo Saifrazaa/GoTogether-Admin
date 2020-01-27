@@ -127,31 +127,106 @@ router.get("/allOnGoingRides", (req, res) => {
 router.get("/getAllComplains", (req, res) => {
     CompletedRides.find({ "complains": { $exists: true }, $where: "this.complains.length>0" }).then(response => {
         if (response && response.length > 0) {
-            var i = 0;
-            response.forEach((ride, index) => {
-                UsersModel.findById(ride.driverID).then(driver => {
-                    if (driver) {
-                        console.log(driver);
-                        i++;
-                        if (i === response.length) {
-                            res.send({ success: true, rides: response })
-                        }
-                    }
-                    else {
-                        i++;
-                        if (i === response.length) {
-                            res.send({ success: true, rides: response })
-                        }
-                    }
-                }).catch(err => {
-                })
-            })
+            res.send({ success: true, rides: response })
         }
         else {
             res.send({ success: false, error: "No Ride Found" })
         }
     }).catch(err => {
         res.send({ success: false, error: err.message })
+    })
+})
+router.post("/handleComplainAction", (req, res) => {
+    var action = req.body.action;
+    var post = JSON.parse(req.body.complain);
+    CompletedRides.findById(post._id).then(ride => {
+        if (ride) {
+            var driverID = ride.driverID;
+            var d = new Date(ride.date);
+            var day = d.getDate();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            var date = day + "/" + month + "/" + year;
+            UsersModel.findById(driverID).then(driver => {
+                if (driver) {
+                    var driverEmail = driver.email;
+                    if (action === "warn") {
+                        driver.warning += 1
+                        var mailOptions = {
+                            from: "Go Together",
+                            to: driverEmail,
+                            subject: "Driver Warning",
+                            html: `
+                                <h1 style='color:red;font-size:25px'>Warning!!!</h1>
+                                <h5>You Have Been Warned About Last Trip From ${ride.from.city} To ${ride.to.city} On ${date}</h5>
+                                <h5>If you have any query about this warning please contact community.gotogether@gmail.com<h5>
+                            `
+                        }
+                        transporter.sendMail(mailOptions, (err, info) => {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                console.log(info);
+                            }
+                        })
+                        UsersModel.updateOne({ _id: driver._id }, driver).then(driverRes => {
+                            if (driverRes) {
+                                ride.complains = [];
+                                CompletedRides.updateOne({ _id: ride._id }, ride).then(rideRes => {
+                                    if (rideRes) {
+                                        res.send({ success: true });
+                                    }
+                                    else {
+                                        res.send({ success: false, error: "Something Bad Happened" })
+                                    }
+                                }).catch(err => {
+                                    res.send({ success: false, error: "Something Bad Happened" })
+                                })
+                            }
+                            else {
+                                res.send({ success: false, error: "Something Bad Happened" })
+                            }
+                        }).catch(err => {
+                            res.send({ success: false, error: "Something Bad Happened" })
+                        })
+                    }
+                    else {
+                        driver.status = "banned";
+                        UsersModel.updateOne({ _id: driver._id }, driver).then(driverRes => {
+                            if (driverRes) {
+                                ride.complains = [];
+                                CompletedRides.updateOne({ _id: ride._id }, ride).then(rideRes => {
+                                    if (rideRes) {
+                                        res.send({ success: true });
+                                    }
+                                    else {
+                                        res.send({ success: false, error: "Something Bad Happened" })
+                                    }
+                                }).catch(err => {
+                                    res.send({ success: false, error: "Something Bad Happened" })
+                                })
+                            }
+                            else {
+                                res.send({ success: false, error: "Something Bad Happened" })
+                            }
+                        }).catch(err => {
+                            res.send({ success: false, error: "Something Bad Happened" })
+                        })
+                    }
+                }
+                else {
+                    res.send({ success: false, error: "Something Bad Happened" })
+                }
+            }).catch(err => {
+                res.send({ success: false, error: "Something Bad Happened" })
+            })
+        }
+        else {
+            res.send({ success: false, error: "Something Bad Happened" })
+        }
+    }).catch(err => {
+        res.send({ success: false, error: "Something Bad Happened" })
     })
 })
 export default router;

@@ -74,6 +74,20 @@ export default function DataReducer(state = initialState, action) {
         case failureActionOf(DataActions.GET_ALL_COMPLAINS):
             return { ...state, loader: false, error: action.payload }
 
+        //handle action on complain solve
+        case DataActions.HANDLE_ACTION_COMPLAIN:
+            return { ...state, loader: true }
+        case successActionOf(DataActions.HANDLE_ACTION_COMPLAIN):
+            var complains = state.complains;
+            var payload = JSON.parse(action.payload);
+            var newComplains = complains.filter(ride => ride._id !== payload._id);
+            return { ...state, loader: false, complains: newComplains, success: true }
+        case failureActionOf(DataActions.HANDLE_ACTION_COMPLAIN):
+            return { ...state, loader: false, error: action.error }
+
+        //clear global status
+        case DataActions.CLEAR_REDUCER:
+            return { ...state, success: false, loader: false }
         default:
             return state;
     }

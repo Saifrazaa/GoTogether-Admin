@@ -70,6 +70,10 @@ const userschema = new mongoose.Schema({
     overallRating: {
         type: Number,
         default: 0
+    },
+    warning: {
+        type: Number,
+        default: 0
     }
 })
 

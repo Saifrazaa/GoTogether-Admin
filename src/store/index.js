@@ -23,7 +23,8 @@ export const rootEpic = combineEpics(
   DataEpic.GetAllUsers,
   DataEpic.HandleUserListAction,
   DataEpic.GetAllOnGoingRides,
-  DataEpic.GetAllComplains
+  DataEpic.GetAllComplains,
+  DataEpic.HandleComplainAction
 );
 
 export { connect };
